@@ -1,0 +1,21 @@
+package it.polito.tdp.lab04.DAO;
+
+import it.polito.tdp.lab04.model.Studente;
+
+public class MainDiProvaDAO {
+	
+	public static void main(String[] args) {
+		
+		CorsoDAO c = new CorsoDAO();
+		
+		System.out.println(c.getTuttiICorsi());
+		
+		StudenteDAO sDAO = new StudenteDAO();
+		
+		Studente s =  sDAO.getStudenteDAO(156622);
+		
+		
+		System.out.println(s.getNome());
+	}
+
+}

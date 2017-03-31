@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.lab04.controller.SegreteriaStudentiController">
+   <top>
+      <Label text="Lab3_Segreteria Studenti" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="10.0" />
+         </BorderPane.margin></Label>
+   </top>
+   <center>
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="5.0">
+               <children>
+                  <Label text="Corsi :">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <ComboBox fx:id="comboCorso" promptText="Corsi">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <Button fx:id="btnCercaIscrittiCorso" mnemonicParsing="false" onAction="#doCercaIscrittiCorso" text="Cerca iscritti Corso">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <Label text="Studente :">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtMatricola" />
+                  <CheckBox fx:id="checkCercaNome" mnemonicParsing="false" onAction="#doCercaNome" />
+                  <TextField fx:id="txtNome" />
+                  <TextField fx:id="txtCognome">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Button fx:id="btnCercaCorsi" mnemonicParsing="false" onAction="#doCercaCorsi" text="Cerca corsi">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnIscrivi" mnemonicParsing="false" onAction="#doIscrivi" text="Iscrivi">
+                     <HBox.margin>
+                        <Insets left="370.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <TextArea fx:id="txtResult" HBox.hgrow="SOMETIMES">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#doReset" text="Reset">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
