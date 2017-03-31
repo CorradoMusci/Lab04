@@ -118,7 +118,7 @@ public class SegreteriaStudentiController {
 		
 		StudenteDAO s = new StudenteDAO();
 		
-		Corso corso = comboCorso.getValue();
+		Corso cors = comboCorso.getValue();
 		int matricola  = Integer.parseInt(txtMatricola.getText());
 	    
 		
