@@ -39,7 +39,7 @@ public class StudenteDAO {
 		// TODO
 		
 
-			final String sql = "Select studente.matricola, studente.nome ,studente.cognome,corso.codins FROM iscrizione, studente,corso"+
+			final String sql = "Select studente.matricola, studente.nome ,studente.cognome,corso.codins FROM iscrizione,studente,corso"+
 					"where iscrizione.matricola=studente.matricola and iscrizione.codins = corso.codins"+
 					"and corso.codins=? and iscrizione.matricola = ?";
 

@@ -119,7 +119,15 @@ public class SegreteriaStudentiController {
 		StudenteDAO s = new StudenteDAO();
 		
 		Corso corso = comboCorso.getValue();
-		int matricola  = Integer.parseInt(txtMatricola.getText());
+		int matricola = 0;
+		
+		try{
+		 matricola  = Integer.parseInt(txtMatricola.getText());
+		}catch(NumberFormatException e ){
+			txtResult.setText("Formato matricola non corretto");
+			return;
+		}
+		
 	    
 		
 		
