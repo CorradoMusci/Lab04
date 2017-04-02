@@ -59,7 +59,7 @@ public class StudenteDAO {
 
 			} catch (SQLException e) {
 				 e.printStackTrace();
-				throw new RuntimeException("Errore Db");
+				throw new RuntimeException("Errore Dbb");
 			}
 			return false;
 		
