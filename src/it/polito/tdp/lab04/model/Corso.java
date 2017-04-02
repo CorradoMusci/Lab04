@@ -19,32 +19,16 @@ public class Corso {
 		return codins;
 	}
 
-	public void setCodins(String codins) {
-		this.codins = codins;
-	}
-
 	public int getCrediti() {
 		return crediti;
-	}
-
-	public void setCrediti(int crediti) {
-		this.crediti = crediti;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public int getPd() {
 		return pd;
-	}
-
-	public void setPd(int pd) {
-		this.pd = pd;
 	}
 
 	@Override

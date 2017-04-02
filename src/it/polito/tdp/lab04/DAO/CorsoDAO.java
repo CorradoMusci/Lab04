@@ -60,7 +60,7 @@ public class CorsoDAO {
 	public LinkedList<Studente> getStudentiIscrittiAlCorso(Corso corso) {
 		// TODO
 
-		final String sql = "Select studente.matricola, nome ,cognome,cds FROM iscrizione, studente"
+		final String sql = "Select studente.matricola,studente.nome ,studente.cognome,studente.cds FROM iscrizione, studente"
 				+ " WHERE iscrizione.matricola=studente.matricola AND codins=?";
 
 		try {
@@ -85,5 +85,67 @@ public class CorsoDAO {
 			throw new RuntimeException("Errore Db");
 		}
 
+	}
+
+	public boolean studenteIscrittoAlCorso(int matricola, Corso corso) {
+		// TODO
+
+		final String sql = "Select studente.matricola,studente.nome ,studente.cognome,studente.cds FROM iscrizione,studente"
+				+ " WHERE iscrizione.matricola=studente.matricola AND codins=? And studente.matricola = ?";
+		int cont = 0;
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+
+			st.setString(1, corso.getCodins());
+			st.setInt(2, matricola);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				cont++;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
+		
+		if(cont != 0)
+			return true;
+			else 
+				return false;	
+	}
+	
+	/*
+	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al
+	 * corso.
+	 */
+	public boolean inscriviStudenteACorso(int matricola, Corso corso) {
+		// TODO
+
+
+		 if (!this.studenteIscrittoAlCorso(matricola, corso)) {
+				final String sql = "Insert into iscrizione values (?,?)";
+
+				try {
+					Connection conn = ConnectDB.getConnection();
+					PreparedStatement st = conn.prepareStatement(sql);
+
+					st.setInt(1,matricola);
+					st.setString(2,corso.getCodins());
+
+					int rs = st.executeUpdate();
+
+				
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new RuntimeException("Errore Db");
+				}
+				return false;
+		 }
+
+		return true;
 	}
 }

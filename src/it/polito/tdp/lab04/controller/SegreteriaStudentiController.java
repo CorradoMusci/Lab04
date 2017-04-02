@@ -1,6 +1,5 @@
 package it.polito.tdp.lab04.controller;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,9 +19,9 @@ public class SegreteriaStudentiController {
 
 	private Model model;
 	List<Corso> corsi = new LinkedList<Corso>();
-	
-	 @FXML
-     private CheckBox checkCercaNome;
+
+	@FXML
+	private CheckBox checkCercaNome;
 
 	@FXML
 	private ComboBox<Corso> comboCorso;
@@ -55,101 +54,124 @@ public class SegreteriaStudentiController {
 	private TextField txtCognome;
 
 	public void setModel(Model model) {
-		
+
 		this.model = model;
-		
-		
-		
+
 		comboCorso.getItems().add(new Corso("", 0, "", 0));
-		
+
 		comboCorso.getItems().addAll(model.getCorsi());
 	}
 
 	@FXML
 	void doReset(ActionEvent event) {
-		
+
 		txtMatricola.clear();
-		
+
 		txtNome.clear();
-		
+
 		txtCognome.clear();
-		
+
 		txtResult.clear();
-		
 
 	}
 
 	@FXML
 	void doCercaNome(ActionEvent event) {
-		
-		if(checkCercaNome.isSelected()){
-			
-			int matricola =  Integer.parseInt(txtMatricola.getText());
-			
-			Studente s  = model.getStudente(matricola);
-			
-			txtNome.setText(s.getNome());
-			
-			txtCognome.setText(s.getCognome());
+		txtResult.clear();
+
+		if (checkCercaNome.isSelected()) {
+			int matricola = 0;
+
+			try {
+				matricola = Integer.parseInt(txtMatricola.getText());
+			} catch (Exception e) {
+				txtResult.setText("Formato matricola non corretto\n");
+			}
+
+			Studente s = model.getStudente(matricola);
+			try {
+				txtNome.setText(s.getNome());
+
+				txtCognome.setText(s.getCognome());
+			} catch (Exception e) {
+				txtResult.setText("Formato matricola non corretto\n");
+			}
 		}
 
 	}
 
 	@FXML
 	void doCercaIscrittiCorso(ActionEvent event) {
-		
+		txtResult.clear();
+
 		Corso corso = comboCorso.getValue();
-		
-		if(corso == null){
+
+		if (corso == null) {
 			txtResult.setText("corso non selezionato");
-		}else{
-			for(Studente s : model.getStudentiInscrittiAlCorso(corso)){
-				System.out.println(model);
-				txtResult.appendText(s.getMatricola()+" "+s.getCognome()+" "+s.getNome()+"\n");
+		} else {
+			for (Studente s : model.getStudentiInscrittiAlCorso(corso)) {
+				txtResult.appendText(s.getMatricola() + " " + s.getCognome() + " " + s.getNome() + "\n");
 			}
 		}
-		
-	
 
 	}
 
 	@FXML
 	void doCercaCorsi(ActionEvent event) {
-		
-		StudenteDAO s = new StudenteDAO();
-		
+		txtResult.clear();
+
 		Corso corso = comboCorso.getValue();
 		int matricola = 0;
-		
-		try{
-		 matricola  = Integer.parseInt(txtMatricola.getText());
-		}catch(NumberFormatException e ){
+
+		try {
+			matricola = Integer.parseInt(txtMatricola.getText());
+		} catch (NumberFormatException e) {
 			txtResult.setText("Formato matricola non corretto");
 			return;
 		}
-		
-	    
-		
-		
-		boolean trovato = s.studenteIscrittoAlCorso(corso, matricola);
-		
-		if(trovato == true)
-			txtResult.setText("Studente trovato");
-		else
-			txtResult.setText("Studente non trovato");
-		
 
+		matricola = Integer.parseInt(txtMatricola.getText());
+
+		if (corso.toString() == "") {
+			for (Corso c : model.getCorsiDelloStudente(matricola)) {
+				txtResult.appendText(c.toString() + "\n");
+			}
+		} else {
+			if (model.studenteIscrittoAlCorso(matricola, corso) == true)
+				txtResult.appendText("Lo studente " + matricola + " segue il corso " + corso.toString());
+			else
+				txtResult.appendText("Lo studente " + matricola + " non segue il corso " + corso.toString());
+		}
 	}
 
 	@FXML
 	void doIscrivi(ActionEvent event) {
+		txtResult.clear();
 
+		Corso corso = comboCorso.getValue();
+		Integer matricola = null;
+		try {
+			matricola = Integer.parseInt(txtMatricola.getText());
+		} catch (NumberFormatException e) {
+			txtResult.setText("Formato matricola non corretto");
+			return;
+		}
+
+		if (corso != null && corso.getNome() != "") {
+			boolean trovato = model.inscriviStudenteACorso(matricola, corso);
+			if (trovato)
+				txtResult.appendText("Studente già inscritto");
+			else
+				txtResult.appendText("Studente inscritto con successo");
+		} else {
+			txtResult.setText("Formato non corretto");
+			return;
+		}
 	}
 
 	@FXML
 	void initialize() {
-		
-		
+
 		assert comboCorso != null : "fx:id=\"comboCorso\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
 		assert btnCercaIscrittiCorso != null : "fx:id=\"btnCercaIscrittiCorso\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
 		assert btnCercaCorsi != null : "fx:id=\"btnCercaCorsi\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";

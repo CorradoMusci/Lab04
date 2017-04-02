@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Studente;
 
 public class StudenteDAO {
+
+	private LinkedList<Corso> corsi = new LinkedList<Corso>();
+	private CorsoDAO corsoDAO = new CorsoDAO();
 
 	public Studente getStudenteDAO(int matricola) {
 
@@ -34,48 +39,36 @@ public class StudenteDAO {
 		}
 		return null;
 	}
-	
-	public boolean studenteIscrittoAlCorso(Corso corso,int matricola) {
+
+	public LinkedList<Corso> getCorsiDelloStudente(int matricola) {
 		// TODO
-		
 
-			final String sql = "Select studente.matricola, studente.nome ,studente.cognome,corso.codins FROM iscrizione,studente,corso"+
-					"where iscrizione.matricola=studente.matricola and iscrizione.codins = corso.codins"+
-					"and corso.codins=? and iscrizione.matricola = ?";
+		final String sql = "Select corso.codins,corso.crediti,corso.nome,corso.pd FROM iscrizione,corso"
+				+ " WHERE iscrizione.codins=corso.codins AND iscrizione.matricola=?";
 
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
 
-			try {
-				Connection conn = ConnectDB.getConnection();
-				PreparedStatement st = conn.prepareStatement(sql);
-				
-				st.setString(1,corso.getCodins());
-				st.setInt(2,matricola);
+			st.setInt(1, matricola);
 
-				ResultSet rs = st.executeQuery();
-                 
-				System.out.println(rs);
-				
+			ResultSet rs = st.executeQuery();
 
+			while (rs.next()) {
 
-			} catch (SQLException e) {
-				 e.printStackTrace();
-				throw new RuntimeException("Errore Dbb");
+				Corso c = new Corso(rs.getString("codins"), rs.getInt("crediti"), rs.getString("nome"),
+						rs.getInt("pd"));
+				corsi.add(c);
 			}
-			return false;
-		
+
+			return corsi;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
 	}
 
-	/*
-	 * Data una matricola ed il codice insegnamento,
-	 * iscrivi lo studente al corso.
-	 */
-	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
-		// TODO
-		
-		if(!this.studenteIscrittoAlCorso(corso, studente.getMatricola())){
-			
-		}
-		return false;
-	}
+	
 
 }

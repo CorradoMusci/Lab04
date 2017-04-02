@@ -1,7 +1,5 @@
 package it.polito.tdp.lab04.model;
 
-import it.polito.tdp.lab04.DAO.CorsoDAO;
-
 public class Studente {
 
 	private int matricola;
@@ -15,10 +13,6 @@ public class Studente {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.cds = cds;
-	}
-
-	public Studente() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getMatricola() {
@@ -36,7 +30,5 @@ public class Studente {
 	public String getCds() {
 		return cds;
 	}
-	
-	
 
 }
