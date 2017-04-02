@@ -71,6 +71,10 @@ public class StudenteDAO {
 	 */
 	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
 		// TODO
+		
+		if(!this.studenteIscrittoAlCorso(corso, studente.getMatricola())){
+			
+		}
 		return false;
 	}
 
